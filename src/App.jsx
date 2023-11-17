@@ -4,20 +4,29 @@ import {
   Text,
   View,
   Pressable,
+  TextInput,
   useWindowDimensions,
 } from 'react-native';
 
 export default function App() {
   const {height} = useWindowDimensions();
-  const [number, setNumber] = useState(0);
+  const [number, setAnswer] = useState("");
 
   function handlePress() {
-    setNumber(parseInt(Math.random() * 10000, 10) % 100);
+    const answers = ["Yes","No","Maybe"];
+    const randomIndex = Math.floor(Math.random() * answers.length);
+    setAnswer(answers[randomIndex]);
   }
 
   return (
     <View style={[styles.container, {height}, StyleSheet.absoluteFill]}>
-      <Text>Random number: {number}</Text>
+      <Text>The Magic 8 Ball</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Ask me any number"
+        keyboardType="text"
+      />
+     
       <View style={styles.br} />
       <Pressable
         style={({pressed}) => [
@@ -27,8 +36,9 @@ export default function App() {
           styles.btn,
         ]}
         onPress={handlePress}>
-        <Text style={styles.btnText}>Generate a number</Text>
+        <Text style={styles.btnText}>Answer</Text>
       </Pressable>
+      <Text>{number}</Text>
     </View>
   );
 }
@@ -43,10 +53,12 @@ const styles = StyleSheet.create({
   br: {
     height: 12,
   },
+  
   btn: {
     backgroundColor: '#222',
     padding: 10,
   },
+
   btnText: {
     color: '#fff',
   },
